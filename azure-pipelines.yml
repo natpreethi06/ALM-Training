@@ -1,0 +1,24 @@
+trigger:
+- main
+
+pool:
+  vmImage: windows-latest
+
+steps:
+- task: CmdLine@2
+  inputs:
+    script: 'ls'
+- task: PowerPlatformToolInstaller@2
+  inputs:
+    DefaultVersion: true
+- task: PowerPlatformPackSolution@2
+  inputs:
+    SolutionSourceFolder: '.'
+    SolutionOutputFile: 'packed-solution/contoso_university_core.zip'
+    SolutionType: 'Both'
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: 'packed-solution'
+    artifact: 'packed-solution'
+    publishLocation: 'pipeline'
+
